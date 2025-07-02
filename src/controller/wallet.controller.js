@@ -31,12 +31,12 @@ export default class WalletController {
     }
 
     static async debitWallet(req, res) {
+        const session = await mongoose.startSession();
         try {
             const { balance, receiver } = req.body;
             const { user } = req;
 
             //here transition more 
-            const session = await mongoose.startSession();
             session.startTransaction();
 
             await WalletService.debitWallet(user.userId, balance, receiver);
